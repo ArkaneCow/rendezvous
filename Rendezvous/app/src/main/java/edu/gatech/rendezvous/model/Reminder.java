@@ -21,31 +21,15 @@ public class Reminder {
         return userTrigger;
     }
 
-    public void setUserTrigger(User userTrigger) {
-        this.userTrigger = userTrigger;
-    }
-
     public User getUserReceiver() {
         return userReceiver;
-    }
-
-    public void setUserReceiver(User userReceiver) {
-        this.userReceiver = userReceiver;
     }
 
     public String getReminderText() {
         return reminderText;
     }
 
-    public void setReminderText(String reminderText) {
-        this.reminderText = reminderText;
-    }
-
     public int getReminderTime() {
         return reminderTime;
-    }
-
-    public void setReminderTime(int reminderTime) {
-        this.reminderTime = reminderTime;
     }
 }
