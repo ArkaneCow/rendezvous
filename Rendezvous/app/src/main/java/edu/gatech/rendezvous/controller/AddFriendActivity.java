@@ -1,12 +1,18 @@
 package edu.gatech.rendezvous.controller;
 
+import android.app.Dialog;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import edu.gatech.rendezvous.R;
 import edu.gatech.rendezvous.service.WifiDirectService;
 
@@ -33,6 +39,37 @@ public class AddFriendActivity extends AppCompatActivity {
             friendUpdater.postDelayed(this, WifiDirectService.UPDATE_PERIOD);
         }
     };
+
+    private void setAddUserDialog() {
+        //Variables
+        final EditText userToAdd;
+        Button addButton;
+        final Dialog addUserDialog = new Dialog(this);
+        addUserDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Process
+        addUserDialog.setContentView(R.layout.add_by_user);
+        //reminderDialog.setTitle("Plan a Rendezvous");
+        userToAdd = (EditText) addUserDialog.findViewById(R.id.userToAdd);
+        addButton = (Button) addUserDialog.findViewById(R.id.addButton);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (userToAdd.getText().toString().equals("testuser")) {
+                    Toast.makeText(getApplicationContext(), "You have a new friend!", Toast.LENGTH_SHORT).show();
+                    addUserDialog.dismiss();
+                } else {
+                    Toast.makeText(getApplicationContext(), "We couldn't find your friend!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+        addUserDialog.show();
+    }
+
+
+    public void launchAddUserDialog(View v) {
+        setAddUserDialog();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
