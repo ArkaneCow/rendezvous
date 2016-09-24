@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:background="#6E7B8B">
+    android:layout_height="150dp"
+    android:background="@color/colorBackground">
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:rowCount="1"
+        android:layout_height="65dp"
         android:columnCount="2"
-        android:id="@+id/gridLayout4">
+        android:rowCount="1">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User:"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:text="Username:"
             android:id="@+id/textView13"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentStart="true"
-            android:textColor="#00008B"
-            android:textSize="35dp" />
+            android:textColor="@color/colorPrimaryDark"
+            android:background="@color/colorPrimary"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:singleLine="false"
+            android:paddingTop="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp" />
 
         <EditText
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:id="@+id/userToAdd"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignStart="@+id/addButton"
-            android:layout_marginLeft="10dp" />
-
+            android:layout_row="0"
+            android:layout_column="1"
+            android:layout_marginLeft="15dp"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="10dp" />
     </GridLayout>
 
     <Button
@@ -39,8 +40,11 @@
         android:layout_height="wrap_content"
         android:text="Add"
         android:id="@+id/addButton"
-        android:textColor="#6E7B8B"
-        android:background="#00008B"
-        android:layout_below="@+id/gridLayout4"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
+        android:background="@color/colorPrimary"
+        android:textSize="20dp"
+        android:textColor="@color/colorPrimaryDark" />
 </RelativeLayout>
