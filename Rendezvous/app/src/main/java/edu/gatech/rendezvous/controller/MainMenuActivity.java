@@ -26,6 +26,29 @@ import edu.gatech.rendezvous.R;
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private void setReminderDialog() {
+        //Variables
+        final EditText who;
+        final EditText what;
+        Button btSave;
+        final Dialog reminderDialog = new Dialog(this);
+
+        //Process
+        reminderDialog.setContentView(R.layout.activity_set_reminder);
+        reminderDialog.setTitle("Plan a Rendezvous");
+        who = (EditText) reminderDialog.findViewById(R.id.who);
+        what = (EditText) reminderDialog.findViewById(R.id.what);
+        btSave = (Button) reminderDialog.findViewById(R.id.btSave);
+
+        btSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //this needs to be changed to check if the user and password are good
+               //take the information from who and what and save it into reminders
+            }
+        });
+    }
+
     private void startDialog() {
         //Variables
         final EditText user;
@@ -126,7 +149,8 @@ public class MainMenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_plan) {
-
+            Intent intent = new Intent(this, SetReminderActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_add) {
             Intent intent = new Intent(this, AddFriendActivity.class);
             startActivity(intent);
@@ -135,8 +159,9 @@ public class MainMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_rendez) {
 
         } else if (id == R.id.nav_settings) {
-            Intent intent = new Intent(this, SettingsActivity.class);
-            startActivity(intent);
+            //Intent intent = new Intent(this, SettingsActivity.class);
+            //startActivity(intent);
+            setReminderDialog();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

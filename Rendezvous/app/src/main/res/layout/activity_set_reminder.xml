@@ -3,11 +3,87 @@
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="500dp"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
         tools:context=".controller.SettingsActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:text="Plan a Rendezvous!"
+        android:id="@+id/textView7"
+        android:textStyle="bold"
+        android:textSize="30dp"
+        android:textColor="#00008B"
+        android:textAlignment="center"
+        android:background="#6E7B8B" />
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/textView7"
+        android:layout_alignParentStart="true"
+        android:columnCount="2"
+        android:rowCount="3"
+        android:background="#6E7B8B"
+        android:id="@+id/gridLayout2">
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="Who?"
+            android:id="@+id/textView8"
+            android:layout_row="0"
+            android:textStyle="bold"
+            android:textColor="#00008B"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_column="0" />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:text="What?"
+            android:id="@+id/textView9"
+            android:layout_row="1"
+            android:textStyle="bold"
+            android:textColor="#00008B"
+            android:textAlignment="center"
+            android:textSize="20dp"
+            android:layout_column="0" />
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/what"
+            android:layout_column="1"
+            android:hint="What do you need to do when you next see your friend?"
+            android:background="#00000000" />
+
+        <EditText
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/who"
+            android:layout_row="0"
+            android:layout_column="1"
+            android:background="#00000000"
+            android:hint="Enter your friend&apos;s name here!" />
+
+    </GridLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save"
+        android:id="@+id/btSave"
+        android:layout_row="2"
+        android:layout_column="4"
+        android:layout_below="@+id/gridLayout2"
+        android:layout_alignParentStart="true"
+        android:textColor="#6E7B8B"
+        android:background="#00008B" />
 
 </RelativeLayout>
