@@ -11,7 +11,7 @@ import android.os.Handler;
  */
 public class WifiDirectService {
 
-    public static final int UPDATE_PERIOD = 5000;
+    public static final int UPDATE_PERIOD = 10000;
 
     private static WifiDirectService ourInstance = null;
     private static Context wifiContext;
