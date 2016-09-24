@@ -68,7 +68,8 @@
             android:background="@color/colorPrimaryDark"
             android:onClick="launchAddUserDialog"
             android:layout_margin="5dp"
-            android:layout_columnWeight="1" />
+            android:layout_columnWeight="1"
+            android:layout_gravity="right" />
     </GridLayout>
 
 </RelativeLayout>
