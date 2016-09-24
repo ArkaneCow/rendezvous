@@ -45,10 +45,10 @@ public class AddFriendActivity extends AppCompatActivity {
         final Dialog addUserDialog = new Dialog(this);
         addUserDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //Process
-        addUserDialog.setContentView(R.layout.activity_set_reminder);
+        addUserDialog.setContentView(R.layout.add_by_user);
         //reminderDialog.setTitle("Plan a Rendezvous");
-        userToAdd = (EditText) addUserDialog.findViewById(R.id.who);
-        addButton = (Button) addUserDialog.findViewById(R.id.btSave);
+        userToAdd = (EditText) addUserDialog.findViewById(R.id.userToAdd);
+        addButton = (Button) addUserDialog.findViewById(R.id.addButton);
 
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +57,6 @@ public class AddFriendActivity extends AppCompatActivity {
                 //take the information from who and what and save it into reminders
             }
         });
-        addUserDialog.findViewById(R.id.reminderMainLayout).requestFocus();
         addUserDialog.show();
     }
 
