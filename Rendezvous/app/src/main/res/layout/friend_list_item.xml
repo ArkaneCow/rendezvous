@@ -9,9 +9,8 @@
         android:layout_height="wrap_content"
         android:maxWidth="240dp"
         android:text="Friend"
-        android:background="#6E7B8B"
         android:textSize="25sp"
-        android:textColor="#00008B" />
+        android:textColor="@color/colorPrimaryDark" />
     <Button android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:text="+"
