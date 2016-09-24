@@ -132,9 +132,10 @@ public class MainMenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_plan) {
-            // Handle the camera action
-        } else if (id == R.id.nav_add) {
 
+        } else if (id == R.id.nav_add) {
+            Intent intent = new Intent(this, AddFriendActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_friends) {
 
         } else if (id == R.id.nav_rendez) {

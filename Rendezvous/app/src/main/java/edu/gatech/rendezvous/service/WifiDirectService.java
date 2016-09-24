@@ -31,6 +31,10 @@ public class WifiDirectService {
         }
     };
 
+    public WifiDirectBroadcastReceiver getWifiDirectBroadcastReceiver() {
+        return wifiDirectBroadcastReceiver;
+    }
+
     private void initializeWifiDirect() {
         intentFilter = new IntentFilter();
         intentFilter.addAction(WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION);
@@ -40,6 +44,7 @@ public class WifiDirectService {
         wifiManager = (WifiP2pManager) wifiContext.getSystemService(Context.WIFI_P2P_SERVICE);
         wifiChannel = wifiManager.initialize(wifiContext, wifiContext.getMainLooper(), null);
         receiver = new WifiDirectBroadcastReceiver(wifiManager, wifiChannel);
+        wifiContext.registerReceiver(receiver, intentFilter);
         updateHandler.post(discoverRunnable);
     }
 

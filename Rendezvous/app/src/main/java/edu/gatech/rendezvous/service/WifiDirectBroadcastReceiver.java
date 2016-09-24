@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.wifi.p2p.WifiP2pDevice;
 import android.net.wifi.p2p.WifiP2pDeviceList;
 import android.net.wifi.p2p.WifiP2pManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,8 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
     private WifiP2pManager wifiManager;
     private WifiP2pManager.Channel wifiChannel;
 
-    private List<String> addressList;
-    private List<String> nameList;
+    private static List<String> addressList;
+    private static List<String> nameList;
     private String macAddress;
 
 
@@ -31,6 +32,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.v("onReceive", "onReceive started");
         String action = intent.getAction();
         if (WifiP2pManager.WIFI_P2P_STATE_CHANGED_ACTION.equals(action)) {
             wifiRequest();
@@ -55,6 +57,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
     }
 
     private void wifiRequest() {
+        Log.v("wifiRequest", "wifiRequest Started");
         WifiP2pManager.PeerListListener peerListListener = new WifiP2pManager.PeerListListener() {
             @Override
             public void onPeersAvailable(WifiP2pDeviceList wifiP2pDeviceList) {
@@ -69,5 +72,6 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
             }
         };
         wifiManager.requestPeers(wifiChannel, peerListListener);
+        Log.v("wifiRequest", "wifiRequest requestPeers");
     }
 }
