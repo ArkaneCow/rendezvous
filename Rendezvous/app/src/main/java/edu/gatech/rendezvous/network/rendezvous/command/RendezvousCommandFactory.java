@@ -2,6 +2,8 @@ package edu.gatech.rendezvous.network.rendezvous.command;
 
 import edu.gatech.rendezvous.network.ApiCommand;
 
+import java.util.List;
+
 /**
  * Created by jwpilly on 9/24/16.
  */
@@ -53,5 +55,9 @@ public class RendezvousCommandFactory {
 
     public ApiCommand getChangeUserPasswordCommand(String username, String oldPassword, String newPasword) {
         return new RendezvousChangeUserPassword(username, oldPassword, newPasword);
+    }
+
+    public ApiCommand getProcessIdListCommand(String username, List<String> idList) {
+        return new RendezvousProcessIdList(username, idList);
     }
 }
