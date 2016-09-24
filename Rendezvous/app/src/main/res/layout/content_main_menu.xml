@@ -15,7 +15,9 @@
         android:background="#6E7B8B">
 
     <TextView
-            android:text="Hello World!"
+            android:text="Welcome to Rendezvous"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 </RelativeLayout>
