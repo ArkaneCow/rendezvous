@@ -10,7 +10,8 @@ public class SessionState {
     private static final String SESSION_PREFS = "RENDEZVOUS_SESSION_PREFS";
     private static final String USER_PREFIX = "sessionUser_";
     private static SessionState ourInstance = null;
-    private static User sessionUser = null;
+    private User sessionUser = null;
+    private String sessionApiKey = null;
 
     private SessionState() {
     }
