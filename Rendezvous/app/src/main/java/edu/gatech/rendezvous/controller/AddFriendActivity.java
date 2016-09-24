@@ -1,10 +1,14 @@
 package edu.gatech.rendezvous.controller;
 
+import android.app.Dialog;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import edu.gatech.rendezvous.R;
@@ -33,6 +37,33 @@ public class AddFriendActivity extends AppCompatActivity {
             friendUpdater.postDelayed(this, WifiDirectService.UPDATE_PERIOD);
         }
     };
+
+    private void setAddUserDialog() {
+        //Variables
+        final EditText userToAdd;
+        Button addButton;
+        final Dialog addUserDialog = new Dialog(this);
+        addUserDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        //Process
+        addUserDialog.setContentView(R.layout.activity_set_reminder);
+        //reminderDialog.setTitle("Plan a Rendezvous");
+        userToAdd = (EditText) addUserDialog.findViewById(R.id.who);
+        addButton = (Button) addUserDialog.findViewById(R.id.btSave);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //this needs to be changed to check if the user and password are good
+                //take the information from who and what and save it into reminders
+            }
+        });
+        addUserDialog.findViewById(R.id.reminderMainLayout).requestFocus();
+        addUserDialog.show();
+    }
+
+    public void launchAddUserDialog(View v) {
+        setAddUserDialog();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
