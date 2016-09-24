@@ -41,6 +41,7 @@ public class MainMenuActivity extends AppCompatActivity
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //this needs to be changed to check if the user and password are good
                 if (user.getText().toString().equals("User") && password.getText().toString().equals("password")) {
                     Toast.makeText(getApplicationContext(), "Valid credentials", Toast.LENGTH_SHORT).show();
 
