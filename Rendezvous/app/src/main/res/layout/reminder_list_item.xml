@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+    <TextView
+            android:id="@+id/userTriggerLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="240dp"
+            android:text="User"
+            android:background="#6E7B8B"
+            android:textSize="25sp"
+            android:textColor="#00008B" />
+    <TextView
+            android:id="@+id/reminderTextLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:maxWidth="240dp"
+            android:text="Reminder Text"
+            android:background="#6E7B8B"
+            android:layout_alignParentRight="true"
+            android:textColor="#00008B" />
+</RelativeLayout>
