@@ -25,7 +25,7 @@ public class RendezvousChangeUserPassword implements ApiCommand {
 
     @Override
     public ApiReceiver execute(ApiCallback callback) {
-        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "?apiKey=" + RendezvousInvoker.RENDEZVOUS_API_KEY + "&username=" + username;
+        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint;
         return new RendezvousSuccessReceiver(ApiNetwork.getInstance().apiJSON(url), callback);
     }
 }

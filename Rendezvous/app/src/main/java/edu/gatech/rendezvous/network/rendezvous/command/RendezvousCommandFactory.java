@@ -26,4 +26,16 @@ public class RendezvousCommandFactory {
     public ApiCommand getReminderListCommand(String username) {
         return new RendezvousReminderList(username);
     }
+
+    public ApiCommand getAddDeviceCommand(String username, String deviceId) {
+        return new RendezvousAddDevice(username, deviceId);
+    }
+
+    public ApiCommand getUsersExistsCommand(String userQuery) {
+        return new RendezvousUserExists(userQuery);
+    }
+
+    public ApiCommand getRegisterUserCommand(String username, String password) {
+        return new RendezvousRegisterUser(username, password);
+    }
 }
