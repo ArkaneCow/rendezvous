@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
 import edu.gatech.rendezvous.R;
 import edu.gatech.rendezvous.service.WifiDirectService;
 
@@ -53,12 +55,17 @@ public class AddFriendActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //this needs to be changed to check if the user and password are good
-                //take the information from who and what and save it into reminders
+                if (userToAdd.getText().toString().equals("testuser")) {
+                    Toast.makeText(getApplicationContext(), "You have a new friend!", Toast.LENGTH_SHORT).show();
+                    addUserDialog.dismiss();
+                } else {
+                    Toast.makeText(getApplicationContext(), "We couldn't find your friend!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
         addUserDialog.show();
     }
+
 
     public void launchAddUserDialog(View v) {
         setAddUserDialog();
