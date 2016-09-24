@@ -65,7 +65,8 @@
             android:layout_row="2"
             android:focusableInTouchMode="false"
             android:hint="Enter new password"
-            android:textColorHint="#00008B" />
+            android:textColorHint="#00008B"
+            android:clickable="false" />
 
         <EditText
             android:layout_width="250dp"
@@ -75,7 +76,8 @@
             android:layout_column="1"
             android:elegantTextHeight="false"
             android:hint="Enter current password"
-            android:textColorHint="#00008B" />
+            android:textColorHint="#00008B"
+            android:clickable="false" />
 
         <TextView
             android:layout_width="wrap_content"
