@@ -28,15 +28,17 @@
         android:layout_height="250dp"
         android:id="@+id/friendListView"
         android:layout_below="@+id/textView10"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/gridLayout3" />
 
     <GridLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/friendListView"
-        android:layout_alignParentStart="true"
+        android:layout_height="50dp"
         android:columnCount="2"
-        android:rowCount="1">
+        android:rowCount="1"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/gridLayout3">
 
         <Button
                 android:layout_width="175dp"
