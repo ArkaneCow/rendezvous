@@ -12,8 +12,6 @@ import java.util.List;
  */
 public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
 
-    private WifiDirectBroadcastReceiver ourInstance = null;
-
     private WifiP2pManager wifiManager;
     private WifiP2pManager.Channel wifiChannel;
 
@@ -22,5 +20,9 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
+    }
+
+    public List<String> getIdList() {
+        return idList;
     }
 }
