@@ -35,7 +35,7 @@ public class MainMenuActivity extends AppCompatActivity
 
         //Process
         reminderDialog.setContentView(R.layout.activity_set_reminder);
-        reminderDialog.setTitle("Plan a Rendezvous");
+        //reminderDialog.setTitle("Plan a Rendezvous");
         who = (EditText) reminderDialog.findViewById(R.id.who);
         what = (EditText) reminderDialog.findViewById(R.id.what);
         btSave = (Button) reminderDialog.findViewById(R.id.btSave);
@@ -60,7 +60,7 @@ public class MainMenuActivity extends AppCompatActivity
 
         //Process
         dialogCustom.setContentView(R.layout.activity_login_register);
-        dialogCustom.setTitle("Login Prompt");
+        //dialogCustom.setTitle("Login Prompt");
         user = (EditText) dialogCustom.findViewById(R.id.enterUser);
         password = (EditText) dialogCustom.findViewById(R.id.enterPass);
         btLogin = (Button) dialogCustom.findViewById(R.id.btLogin);
