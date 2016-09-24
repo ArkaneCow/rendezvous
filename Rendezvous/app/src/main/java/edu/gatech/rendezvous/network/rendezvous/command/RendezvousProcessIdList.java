@@ -7,21 +7,30 @@ import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousUserListReceiver;
 import edu.gatech.rendezvous.service.ApiNetwork;
 
+import java.util.List;
+
 /**
  * Created by jwpilly on 9/24/16.
  */
-public class RendezvousFriendList implements ApiCommand {
+public class RendezvousProcessIdList implements ApiCommand {
 
-    private static final String apiEndPoint = "/friendList/";
+    private static final String apiEndPoint = "/processIds/";
     private String username;
+    private List<String> idList;
 
-    public RendezvousFriendList(String username) {
+    public RendezvousProcessIdList(String username, List<String> idList) {
         this.username = username;
+        this.idList = idList;
     }
 
     @Override
     public ApiReceiver execute(ApiCallback callback) {
         final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint;
+        StringBuilder sb = new StringBuilder();
+        for (String id : idList) {
+            sb.append(id + ",");
+        }
+        String idSerial = sb.toString();
         return new RendezvousUserListReceiver(ApiNetwork.getInstance().apiJSON(url), callback);
     }
 }
