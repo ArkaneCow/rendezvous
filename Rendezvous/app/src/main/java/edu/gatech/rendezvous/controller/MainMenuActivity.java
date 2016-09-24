@@ -57,6 +57,7 @@ public class MainMenuActivity extends AppCompatActivity
         Button btCreate;
         final Dialog dialogCustom = new Dialog(this);
         dialogCustom.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialogCustom.setCanceledOnTouchOutside(false);
         //Process
         dialogCustom.setContentView(R.layout.activity_login_register);
         //dialogCustom.setTitle("Login Prompt");
