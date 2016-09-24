@@ -30,7 +30,7 @@ public class MainMenuActivity extends AppCompatActivity
         final EditText what;
         Button btSave;
         final Dialog reminderDialog = new Dialog(this);
-
+        reminderDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //Process
         reminderDialog.setContentView(R.layout.activity_set_reminder);
         //reminderDialog.setTitle("Plan a Rendezvous");
@@ -45,6 +45,7 @@ public class MainMenuActivity extends AppCompatActivity
                //take the information from who and what and save it into reminders
             }
         });
+        reminderDialog.findViewById(R.id.reminderMainLayout).requestFocus();
         reminderDialog.show();
     }
 
@@ -55,7 +56,7 @@ public class MainMenuActivity extends AppCompatActivity
         Button btLogin;
         Button btCreate;
         final Dialog dialogCustom = new Dialog(this);
-
+        dialogCustom.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //Process
         dialogCustom.setContentView(R.layout.activity_login_register);
         //dialogCustom.setTitle("Login Prompt");

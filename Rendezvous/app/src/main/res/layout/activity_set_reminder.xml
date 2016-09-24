@@ -9,6 +9,9 @@
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="0dp"
         tools:context=".controller.SetReminderActivity"
+        android:id="@+id/reminderMainLayout"
+        android:descendantFocusability="beforeDescendants"
+        android:focusableInTouchMode="true"
     android:background="#6E7B8B">
 
     <TextView
