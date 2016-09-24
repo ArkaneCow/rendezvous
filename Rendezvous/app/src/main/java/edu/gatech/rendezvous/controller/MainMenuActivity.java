@@ -155,9 +155,11 @@ public class MainMenuActivity extends AppCompatActivity
             Intent intent = new Intent(this, AddFriendActivity.class);
             startActivity(intent);
         } else if (id == R.id.nav_friends) {
-
+            Intent intent = new Intent(this, FriendListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_rendez) {
-
+            Intent intent = new Intent(this, ReminderListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_settings) {
             Intent intent = new Intent(this, SettingsActivity.class);
             startActivity(intent);
