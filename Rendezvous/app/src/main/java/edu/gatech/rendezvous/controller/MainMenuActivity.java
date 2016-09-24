@@ -1,5 +1,6 @@
 package edu.gatech.rendezvous.controller;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -12,15 +13,62 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
+
 import edu.gatech.rendezvous.R;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private void startDialog() {
+        //Variables
+        final EditText user;
+        final EditText password;
+        Button btLogin;
+        Button btCreate;
+        final Dialog dialogCustom = new Dialog(this);
+
+        //Process
+        dialogCustom.setContentView(R.layout.activity_login_register);
+        dialogCustom.setTitle("Login Prompt");
+        user = (EditText) dialogCustom.findViewById(R.id.enterUser);
+        password = (EditText) dialogCustom.findViewById(R.id.enterPass);
+        btLogin = (Button) dialogCustom.findViewById(R.id.btLogin);
+        btCreate = (Button) dialogCustom.findViewById(R.id.btCreate);
+
+        btLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (user.getText().toString().equals("User") && password.getText().toString().equals("password")) {
+                    Toast.makeText(getApplicationContext(), "Valid credentials", Toast.LENGTH_SHORT).show();
+
+                    dialogCustom.dismiss();
+                } else {
+                    Toast.makeText(getApplicationContext(), "Invalid credentials", Toast.LENGTH_SHORT).show();
+                    System.out.println(user.getText().toString().equals("User"));
+                    System.out.println(password.getText().toString().equals("password"));
+                }
+            }
+        });
+
+        btCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Adding you to the server", Toast.LENGTH_SHORT).show();
+                dialogCustom.dismiss();
+            }
+        });
+
+        dialogCustom.show();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        startDialog();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
