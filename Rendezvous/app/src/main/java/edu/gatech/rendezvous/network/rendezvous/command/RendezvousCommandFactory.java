@@ -38,4 +38,20 @@ public class RendezvousCommandFactory {
     public ApiCommand getRegisterUserCommand(String username, String password) {
         return new RendezvousRegisterUser(username, password);
     }
+
+    public ApiCommand getAuthenticateCommand(String username, String password) {
+        return new RendezvousAuthenticate(username, password);
+    }
+
+    public ApiCommand getAddFriendCommand(String username, String friendName) {
+        return new RendezvousAddFriend(username, friendName);
+    }
+
+    public ApiCommand getAddReminderCommand(String userTrigger, String userReceiver, String message) {
+        return new RendezvousAddReminder(userTrigger, userReceiver, message);
+    }
+
+    public ApiCommand getChangeUserPasswordCommand(String username, String oldPassword, String newPasword) {
+        return new RendezvousChangeUserPassword(username, oldPassword, newPasword);
+    }
 }
