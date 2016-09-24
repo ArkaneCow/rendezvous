@@ -80,6 +80,7 @@ public class AddFriendActivity extends AppCompatActivity {
         friendListAdapter = new FriendListAdapter(friendsList, getApplicationContext());
         friendListView.setAdapter(friendListAdapter);
         friendUpdater.post(friendUpdateRunnable);
+        getSupportActionBar().hide();
     }
 
     private List<String> refreshList() {
