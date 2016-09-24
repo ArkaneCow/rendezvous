@@ -54,7 +54,8 @@
                 android:layout_column="0"
                 android:textColor="@color/colorPrimary"
                 android:background="@color/colorPrimaryDark" android:onClick="refreshFriendsNearby"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:layout_columnWeight="1" />
 
         <Button
             android:layout_width="165dp"
@@ -66,7 +67,8 @@
             android:textColor="@color/colorPrimary"
             android:background="@color/colorPrimaryDark"
             android:onClick="launchAddUserDialog"
-            android:layout_margin="5dp" />
+            android:layout_margin="5dp"
+            android:layout_columnWeight="1" />
     </GridLayout>
 
 </RelativeLayout>

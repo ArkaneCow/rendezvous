@@ -8,18 +8,22 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/colorBackground">
 
         <TableLayout
             android:layout_width="match_parent"
+            android:layout_margin="5dp"
             android:layout_height="150dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:id="@+id/tableLayout">
+            android:id="@+id/tableLayout"
+            android:background="@color/colorPrimary">
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_margin="5dp">
 
                 <LinearLayout
                     android:orientation="horizontal"
@@ -44,7 +48,7 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="5dp"
                         android:textSize="15dp"
-                        android:textColor="#00008B"
+                        android:textColor="@color/colorPrimaryDark"
                         />
 
                     <EditText
@@ -63,7 +67,7 @@
                         android:layout_marginBottom="5dp"
                         android:textSize="15dp"
                         android:inputType="text"
-                        android:textColor="#00008B" />
+                        android:textColor="@color/colorPrimaryDark" />
                 </LinearLayout>
             </TableRow>
 
@@ -93,7 +97,7 @@
                         android:layout_marginRight="5dp"
                         android:layout_marginBottom="5dp"
                         android:textSize="15dp"
-                        android:textColor="#00008B" />
+                        android:textColor="@color/colorPrimaryDark" />
 
                     <EditText
                         android:layout_width="126dp"
@@ -120,7 +124,8 @@
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@+id/tableLayout">
+            android:layout_below="@+id/tableLayout"
+            android:background="@color/colorBackground">
 
             <TableRow
                 android:layout_width="match_parent"
@@ -133,8 +138,9 @@
                     android:text="Create"
                     android:id="@+id/btCreate"
                     android:layout_weight="5"
-                    android:textColor="#6E7B8B"
-                    android:background="#00008B" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@color/colorPrimary"
+                    android:layout_margin="5dp"/>
 
                 <Button
                     android:layout_width="200dp"
@@ -143,8 +149,9 @@
                     android:id="@+id/btLogin"
                     android:layout_column="1"
                     android:layout_weight="5"
-                    android:textColor="#6E7B8B"
-                    android:background="#00008B" />
+                    android:textColor="@color/colorPrimaryDark"
+                    android:background="@color/colorPrimary"
+                    android:layout_margin="5dp"/>
 
             </TableRow>
 
