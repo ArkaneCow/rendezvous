@@ -1,7 +1,8 @@
-package edu.gatech.rendezvous;
+package edu.gatech.rendezvous.controller;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import edu.gatech.rendezvous.R;
 
 public class ReminderListActivity extends AppCompatActivity {
 
