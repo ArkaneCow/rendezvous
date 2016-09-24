@@ -33,6 +33,14 @@ public class SessionState {
         this.sessionUserName = sessionUserName;
     }
 
+    public String getSessionApiKey() {
+        return sessionApiKey;
+    }
+
+    public void setSessionApiKey(String sessionApiKey) {
+        this.sessionApiKey = sessionApiKey;
+    }
+
     public boolean isLoggedIn() {
         return sessionUserName != null;
     }
