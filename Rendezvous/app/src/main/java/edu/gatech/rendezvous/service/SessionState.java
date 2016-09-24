@@ -1,6 +1,8 @@
 package edu.gatech.rendezvous.service;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+
 import edu.gatech.rendezvous.model.User;
 
 /**
@@ -10,7 +12,7 @@ public class SessionState {
     private static final String SESSION_PREFS = "RENDEZVOUS_SESSION_PREFS";
     private static final String USER_PREFIX = "sessionUser_";
     private static SessionState ourInstance = null;
-    private User sessionUser = null;
+    private String sessionUserName = null;
     private String sessionApiKey = null;
 
     private SessionState() {
@@ -23,19 +25,28 @@ public class SessionState {
         return ourInstance;
     }
 
-    public User getSessionUser() {
-        return sessionUser;
+    public String getSessionUserName() {
+        return sessionUserName;
     }
 
-    public void setSessionUser(User sessionUser) {
-        this.sessionUser = sessionUser;
+    public void setSessionUserName(String sessionUserName) {
+        this.sessionUserName = sessionUserName;
     }
 
     public boolean isLoggedIn() {
-        return sessionUser != null;
+        return sessionUserName != null;
     }
 
     public boolean restoreState(Context context) {
-        return false;
+        final SharedPreferences saveSession = context.getSharedPreferences(SESSION_PREFS, Context.MODE_PRIVATE);
+        final String username = saveSession.getString(USER_PREFIX + "username", null);
+        final String apikey = saveSession.getString(USER_PREFIX + "apikey", null);
+        if (username == null || apikey == null) {
+            return false;
+        } else {
+            this.sessionUserName = username;
+            this.sessionApiKey = apikey;
+            return true;
+        }
     }
 }
