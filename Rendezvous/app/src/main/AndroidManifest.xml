@@ -32,18 +32,19 @@
         </activity>
         <activity android:name=".controller.SetReminderActivity">
         </activity>
-        <activity android:name=".controller.AddFriendActivity">
+        <activity android:name=".controller.AddFriendActivity"
+                    android:label="">
         </activity>
-        <activity android:name=".controller.ReminderListActivity">
+        <activity android:name=".controller.ReminderListActivity"
+                    android:label="">
         </activity>
-        <activity android:name=".controller.FriendListActivity">
+        <activity android:name=".controller.FriendListActivity"
+                    android:label="">
         </activity>
         <activity android:name=".controller.SettingsActivity"
                     android:label="">
         </activity>
         <activity android:name=".controller.LoginRegisterActivity">
-        </activity>
-        <activity android:name=".controller.RegisterActivity">
         </activity>
     </application>
 
