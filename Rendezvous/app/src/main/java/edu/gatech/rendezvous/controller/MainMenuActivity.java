@@ -45,6 +45,7 @@ public class MainMenuActivity extends AppCompatActivity
                //take the information from who and what and save it into reminders
             }
         });
+        reminderDialog.findViewById(R.id.reminderMainLayout).requestFocus();
         reminderDialog.show();
     }
 
