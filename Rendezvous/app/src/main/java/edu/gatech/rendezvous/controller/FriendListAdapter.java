@@ -36,7 +36,7 @@ public class FriendListAdapter extends BaseAdapter implements ListAdapter {
         }
         String s = "";
         for (String f : this.friends) {
-            s += f;
+            s += f + ",";
         }
         Log.v("updateFriends", s);
     }

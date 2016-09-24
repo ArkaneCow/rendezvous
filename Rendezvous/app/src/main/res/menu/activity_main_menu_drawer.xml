@@ -16,7 +16,7 @@
                 android:title="Your Rendezvous"/>
         <item
                 android:id="@+id/nav_friends"
-                android:icon="@drawable/friends"
+                android:icon="@drawable/reminders"
                 android:title="Your Friends"/>
         <item
                 android:id="@+id/nav_settings"
