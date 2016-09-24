@@ -47,6 +47,7 @@ public class MainMenuActivity extends AppCompatActivity
                //take the information from who and what and save it into reminders
             }
         });
+        reminderDialog.show();
     }
 
     private void startDialog() {
@@ -149,8 +150,7 @@ public class MainMenuActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_plan) {
-            Intent intent = new Intent(this, SetReminderActivity.class);
-            startActivity(intent);
+            setReminderDialog();
         } else if (id == R.id.nav_add) {
             Intent intent = new Intent(this, AddFriendActivity.class);
             startActivity(intent);
@@ -159,9 +159,8 @@ public class MainMenuActivity extends AppCompatActivity
         } else if (id == R.id.nav_rendez) {
 
         } else if (id == R.id.nav_settings) {
-            //Intent intent = new Intent(this, SettingsActivity.class);
-            //startActivity(intent);
-            setReminderDialog();
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
