@@ -5,7 +5,4 @@ package edu.gatech.rendezvous.model;
  */
 public interface ReminderManagementFacade {
     void addReminder(Reminder reminder);
-    Reminder findReminder(User userTrigger, User userReceiver, int reminderTime);
-    boolean reminderExists(User userTrigger, User userReceiver, int reminderTime);
-    void updateReminder(Reminder reminder);
 }

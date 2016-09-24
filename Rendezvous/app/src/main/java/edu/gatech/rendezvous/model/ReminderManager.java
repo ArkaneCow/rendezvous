@@ -8,19 +8,4 @@ public class ReminderManager implements ReminderManagementFacade {
     public void addReminder(Reminder reminder) {
 
     }
-
-    @Override
-    public Reminder findReminder(User userTrigger, User userReceiver, int reminderTime) {
-        return null;
-    }
-
-    @Override
-    public boolean reminderExists(User userTrigger, User userReceiver, int reminderTime) {
-        return false;
-    }
-
-    @Override
-    public void updateReminder(Reminder reminder) {
-
-    }
 }
