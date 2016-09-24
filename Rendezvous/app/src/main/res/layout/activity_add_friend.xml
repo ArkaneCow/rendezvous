@@ -39,14 +39,14 @@
         android:rowCount="1">
 
         <Button
-            android:layout_width="175dp"
-            android:layout_height="wrap_content"
-            android:text="Refresh"
-            android:id="@+id/refreshButton"
-            android:layout_row="0"
-            android:layout_column="0"
-            android:textColor="#6E7B8B"
-            android:background="#00008B" />
+                android:layout_width="175dp"
+                android:layout_height="wrap_content"
+                android:text="Refresh"
+                android:id="@+id/refreshButton"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:textColor="#6E7B8B"
+                android:background="#00008B" android:onClick="refreshFriendsNearby"/>
 
         <Button
             android:layout_width="175dp"
