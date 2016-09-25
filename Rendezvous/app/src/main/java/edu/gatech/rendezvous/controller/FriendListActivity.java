@@ -34,13 +34,13 @@ public class FriendListActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         rcf = RendezvousCommandFactory.getInstance();
         rci = RendezvousInvoker.getInstance();
-        friendsList = (ListView) findViewById(R.id.friendListView);
+        friendsList = (ListView) findViewById(R.id.friendsList);
         userListAdapter = new UserListAdapter(fList, getApplicationContext());
         friendsList.setAdapter(userListAdapter);
         ApiCall rapiCall = new ApiCall(rcf.getFriendListCommand(SessionState.getInstance().getSessionUserName()), new ApiCallback<RendezvousUserListReceiver>() {
             @Override
             public void onReceive(RendezvousUserListReceiver receiver) {
-                if (receiver.getEntity().size() != 0) {
+                if (receiver.getEntity() != null && receiver.getEntity().size() != 0) {
                     final List<String> result = receiver.getEntity();
                     runOnUiThread(new Runnable() {
                         @Override

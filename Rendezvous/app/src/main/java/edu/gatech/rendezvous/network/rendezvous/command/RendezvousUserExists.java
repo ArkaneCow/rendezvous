@@ -24,7 +24,7 @@ public class RendezvousUserExists implements ApiCommand {
 
     @Override
     public ApiReceiver execute(ApiCallback callback) {
-        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "/" + userQuery + "/" + username + "/" + RendezvousInvoker.RENDEZVOUS_API_KEY;
+        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "/" + userQuery + "/" + username + "/" + SessionState.getInstance().getSessionApiKey();
         return new RendezvousSuccessReceiver(ApiNetwork.getInstance().apiJSON(url), callback);
     }
 }

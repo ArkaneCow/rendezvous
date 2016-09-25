@@ -6,6 +6,7 @@ import edu.gatech.rendezvous.network.ApiReceiver;
 import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousSuccessReceiver;
 import edu.gatech.rendezvous.service.ApiNetwork;
+import edu.gatech.rendezvous.service.SessionState;
 
 /**
  * Created by jwpilly on 9/24/16.
@@ -23,7 +24,7 @@ public class RendezvousAddFriend implements ApiCommand {
 
     @Override
     public ApiReceiver execute(ApiCallback callback) {
-        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "/" + username + "/" + RendezvousInvoker.RENDEZVOUS_API_KEY + "/" + friendName;
+        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "/" + username + "/" + SessionState.getInstance().getSessionApiKey() + "/" + friendName;
         return new RendezvousSuccessReceiver(ApiNetwork.getInstance().apiJSON(url), callback);
     }
 }
