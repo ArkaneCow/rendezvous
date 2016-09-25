@@ -88,6 +88,13 @@ public class AddFriendActivity extends AppCompatActivity {
                                             }
                                         });
                                         addUserDialog.dismiss();
+                                    } else {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getApplicationContext(), "You are already friends!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
                                     }
                                 }
                             });
