@@ -57,4 +57,15 @@ public class SessionState {
             return true;
         }
     }
+
+    public void saveState(Context context) {
+        final SharedPreferences saveSession = context.getSharedPreferences(SESSION_PREFS, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = saveSession.edit();
+        editor.clear();
+        if (sessionUserName != null) {
+            editor.putString(USER_PREFIX + "username", sessionUserName);
+            editor.putString(USER_PREFIX + "apikey", sessionApiKey);
+        }
+        editor.apply();
+    }
 }
