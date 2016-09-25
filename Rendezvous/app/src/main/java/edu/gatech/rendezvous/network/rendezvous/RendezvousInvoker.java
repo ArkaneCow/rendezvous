@@ -12,8 +12,16 @@ public class RendezvousInvoker implements ApiInvoker {
     public static final String RENDEZVOUS_SERVER = "http://rendezvousserver.azurewebsites.net/";
     public static String RENDEZVOUS_API_KEY = null;
     public static String RENDEZVOUS_USER = null;
+    private static RendezvousInvoker ourInstance = null;
 
-    public RendezvousInvoker() {
+    public static RendezvousInvoker getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new RendezvousInvoker();
+        }
+        return ourInstance;
+    }
+
+    private RendezvousInvoker() {
         RENDEZVOUS_API_KEY = SessionState.getInstance().getSessionApiKey();
         RENDEZVOUS_USER = SessionState.getInstance().getSessionUserName();
     }

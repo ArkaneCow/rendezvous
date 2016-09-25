@@ -21,6 +21,7 @@ import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
 import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousApiKeyReceiver;
 import edu.gatech.rendezvous.service.ApiNetwork;
+import edu.gatech.rendezvous.service.SessionState;
 import edu.gatech.rendezvous.service.WifiDirectService;
 
 public class MainMenuActivity extends AppCompatActivity
@@ -80,13 +81,18 @@ public class MainMenuActivity extends AppCompatActivity
                     return;
                 }
                 RendezvousCommandFactory rcf = RendezvousCommandFactory.getInstance();
-                RendezvousInvoker rci = new RendezvousInvoker();
-                ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(user.getText().toString(), password.getText().toString()), new ApiCallback<RendezvousApiKeyReceiver>() {
+                RendezvousInvoker rci = RendezvousInvoker.getInstance();
+                final String userText = user.getText().toString();
+                String passwordText = password.getText().toString();
+                ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(userText, passwordText), new ApiCallback<RendezvousApiKeyReceiver>() {
                     @Override
                     public void onReceive(RendezvousApiKeyReceiver receiver) {
                         String apiKey = receiver.getEntity();
                         //this needs to be changed to check if the user and password are good
                         if (apiKey != null) {
+                            SessionState.getInstance().setSessionUserName(userText);
+                            SessionState.getInstance().setSessionApiKey(apiKey);
+                            SessionState.getInstance().saveState(getApplicationContext());
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -128,7 +134,10 @@ public class MainMenuActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        startDialog();
+        SessionState.getInstance().restoreState(getApplicationContext());
+        if (SessionState.getInstance().getSessionUserName() == null || SessionState.getInstance().getSessionApiKey() == null) {
+            startDialog();
+        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 

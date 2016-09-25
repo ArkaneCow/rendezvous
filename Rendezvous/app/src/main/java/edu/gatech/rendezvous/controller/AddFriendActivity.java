@@ -14,6 +14,8 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import edu.gatech.rendezvous.R;
+import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
+import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
 import edu.gatech.rendezvous.service.WifiDirectService;
 
 import java.util.ArrayList;
@@ -39,6 +41,9 @@ public class AddFriendActivity extends AppCompatActivity {
             friendUpdater.postDelayed(this, WifiDirectService.UPDATE_PERIOD);
         }
     };
+
+    private RendezvousCommandFactory rcf;
+    private RendezvousInvoker rci;
 
     private void setAddUserDialog() {
         //Variables
@@ -81,6 +86,8 @@ public class AddFriendActivity extends AppCompatActivity {
         friendListView.setAdapter(friendListAdapter);
         friendUpdater.post(friendUpdateRunnable);
         getSupportActionBar().hide();
+        rci = RendezvousInvoker.getInstance();
+        rcf = RendezvousCommandFactory.getInstance();
     }
 
     private List<String> refreshList() {
