@@ -115,7 +115,8 @@
                         android:layout_marginBottom="5dp"
                         android:inputType="text"
                         android:textSize="15dp"
-                        android:textColor="@color/colorPrimaryDark" />
+                        android:textColor="@color/colorPrimaryDark"
+                        android:password="true" />
                 </LinearLayout>
             </TableRow>
 
