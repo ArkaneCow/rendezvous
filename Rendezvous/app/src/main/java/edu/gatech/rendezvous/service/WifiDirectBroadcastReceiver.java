@@ -21,7 +21,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
 
     private static List<String> addressList;
     private static List<String> nameList;
-    private String macAddress;
+    private static String macAddress;
 
 
     public WifiDirectBroadcastReceiver(WifiP2pManager manager, WifiP2pManager.Channel channel) {
@@ -45,6 +45,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
         } else if (WifiP2pManager.WIFI_P2P_THIS_DEVICE_CHANGED_ACTION.equals(action)) {
             WifiP2pDevice device = (WifiP2pDevice) intent.getParcelableExtra(WifiP2pManager.EXTRA_WIFI_P2P_DEVICE);
             macAddress = device.deviceAddress;
+            Log.v("macAddress", macAddress);
         }
     }
 
@@ -54,6 +55,10 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
 
     public List<String> getNameList() {
         return nameList;
+    }
+
+    public String getMacAddress() {
+        return macAddress;
     }
 
     private void wifiRequest() {

@@ -34,6 +34,13 @@
             android:layout_below="@+id/imageView2"
             android:layout_alignParentStart="true"
             android:layout_marginTop="44dp" />
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Register Device"
+                android:id="@+id/registerDeviceButton"
+                android:layout_alignParentTop="true" android:layout_alignParentStart="true"
+                android:onClick="registerDevice"/>
     </RelativeLayout>
 
 </RelativeLayout>

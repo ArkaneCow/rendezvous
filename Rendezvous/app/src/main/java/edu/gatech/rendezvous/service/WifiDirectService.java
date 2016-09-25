@@ -5,13 +5,14 @@ import android.content.Context;
 import android.content.IntentFilter;
 import android.net.wifi.p2p.WifiP2pManager;
 import android.os.Handler;
+import android.util.Log;
 
 /**
  * Created by jwpilly on 9/24/16.
  */
 public class WifiDirectService {
 
-    public static final int UPDATE_PERIOD = 10000;
+    public static final int UPDATE_PERIOD = 5000;
 
     private static WifiDirectService ourInstance = null;
     private static Context wifiContext;
@@ -33,6 +34,19 @@ public class WifiDirectService {
 
     public WifiDirectBroadcastReceiver getWifiDirectBroadcastReceiver() {
         return wifiDirectBroadcastReceiver;
+    }
+
+    public String idFunction(String input) {
+        return CryptographyService.getInstance().hashString(input);
+    }
+
+    public String getDeviceId() {
+        if (wifiDirectBroadcastReceiver.getMacAddress() == null) {
+            return null;
+        } else {
+            Log.v("macAddress", wifiDirectBroadcastReceiver.getMacAddress());
+            return idFunction(wifiDirectBroadcastReceiver.getMacAddress());
+        }
     }
 
     private void initializeWifiDirect() {

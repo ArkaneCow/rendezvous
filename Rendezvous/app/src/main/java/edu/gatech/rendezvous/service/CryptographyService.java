@@ -10,8 +10,14 @@ public class CryptographyService {
     private static CryptographyService ourInstance = null;
 
 
-    private String hashAlgorithm = "MD5";
+    private String hashAlgorithm = "SHA-1";
 
+    public static CryptographyService getInstance() {
+        if (ourInstance == null) {
+            ourInstance = new CryptographyService();
+        }
+        return ourInstance;
+    }
     private CryptographyService() {
     }
 

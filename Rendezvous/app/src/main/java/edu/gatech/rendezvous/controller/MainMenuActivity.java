@@ -3,6 +3,7 @@ package edu.gatech.rendezvous.controller;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.*;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,9 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import edu.gatech.rendezvous.R;
+import edu.gatech.rendezvous.model.Reminder;
 import edu.gatech.rendezvous.network.ApiCall;
 import edu.gatech.rendezvous.network.ApiCallback;
 import edu.gatech.rendezvous.network.ApiReceiver;
@@ -22,16 +25,23 @@ import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
 import edu.gatech.rendezvous.network.rendezvous.command.RendezvousAddReminder;
 import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousApiKeyReceiver;
+import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousReminderListReceiver;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousSuccessReceiver;
 import edu.gatech.rendezvous.service.ApiNetwork;
 import edu.gatech.rendezvous.service.SessionState;
 import edu.gatech.rendezvous.service.WifiDirectService;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private RendezvousCommandFactory rcf;
     private RendezvousInvoker rci;
+
+    private ReminderListAdapter reminderListAdapter;
+    private ListView notificationListView;
 
     private void setReminderDialog() {
         //Variables
@@ -78,8 +88,6 @@ public class MainMenuActivity extends AppCompatActivity
         reminderDialog.show();
     }
 
-
-
     private void startDialog() {
         //Variables
         final EditText user;
@@ -114,6 +122,7 @@ public class MainMenuActivity extends AppCompatActivity
                                     Toast.makeText(getApplicationContext(), "authentication success", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                            Log.v("deviceid", WifiDirectService.getInstance().getDeviceId() == null ? "null" : WifiDirectService.getInstance().getDeviceId());
                             dialogCustom.dismiss();
                         } else {
                             runOnUiThread(new Runnable() {
@@ -206,6 +215,27 @@ public class MainMenuActivity extends AppCompatActivity
         rcf = RendezvousCommandFactory.getInstance();
     }
 
+    private Button registerButton;
+
+    public void registerDevice(View v) {
+        ApiCall registerDeviceId = new ApiCall(rcf.getAddDeviceCommand(SessionState.getInstance().getSessionUserName(), WifiDirectService.getInstance().getDeviceId()), new ApiCallback<RendezvousSuccessReceiver>() {
+            @Override
+            public void onReceive(RendezvousSuccessReceiver receiver) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(getApplicationContext(), "registered device", Toast.LENGTH_SHORT).show();
+                        SessionState.getInstance().saveDeviceId(getApplicationContext());
+                        registerButton.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        });
+        rci.executeCall(registerDeviceId);
+    }
+
+    private List<Reminder> rList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -226,7 +256,29 @@ public class MainMenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        registerButton = (Button) findViewById(R.id.registerDeviceButton);
+        if (SessionState.getInstance().getDeviceId(getApplicationContext()) != null) {
+            registerButton.setVisibility(View.INVISIBLE);
+        }
+        reminderListAdapter = new ReminderListAdapter(rList, getApplicationContext());
+        notificationListView = (ListView) findViewById(R.id.listView2);
+        notificationListView.setAdapter(reminderListAdapter);
+        ApiCall rapiCall = new ApiCall(rcf.getReminderListCommand(SessionState.getInstance().getSessionUserName()), new ApiCallback<RendezvousReminderListReceiver>() {
+            @Override
+            public void onReceive(RendezvousReminderListReceiver receiver) {
+                if (receiver.getEntity() != null && receiver.getEntity().size() != 0) {
+                    final List<Reminder> result = receiver.getEntity();
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            reminderListAdapter.updateReminders(result);
+                            reminderListAdapter.notifyDataSetChanged();
+                        }
+                    });
+                }
+            }
+        });
+        rci.executeCall(rapiCall);
     }
 
     @Override

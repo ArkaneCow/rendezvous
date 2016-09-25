@@ -20,6 +20,7 @@ import edu.gatech.rendezvous.network.ApiReceiver;
 import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
 import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousSuccessReceiver;
+import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousUserListReceiver;
 import edu.gatech.rendezvous.service.SessionState;
 import edu.gatech.rendezvous.service.WifiDirectService;
 
@@ -115,6 +116,13 @@ public class AddFriendActivity extends AppCompatActivity {
         if (idList == null) {
             return null;
         }
+        ApiCall rapiCall = new ApiCall(rcf.getProcessIdListCommand(SessionState.getInstance().getSessionUserName(), idList), new ApiCallback<RendezvousUserListReceiver>() {
+            @Override
+            public void onReceive(RendezvousUserListReceiver receiver) {
+
+            }
+        });
+        rci.executeCall(rapiCall);
         return idList;
     }
 
