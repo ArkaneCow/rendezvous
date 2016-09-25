@@ -23,7 +23,7 @@ public class RendezvousAddFriend implements ApiCommand {
 
     @Override
     public ApiReceiver execute(ApiCallback callback) {
-        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "?apiKey=" + RendezvousInvoker.RENDEZVOUS_API_KEY;
+        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "/" + username + "/" + RendezvousInvoker.RENDEZVOUS_API_KEY + "/" + friendName;
         return new RendezvousSuccessReceiver(ApiNetwork.getInstance().apiJSON(url), callback);
     }
 }

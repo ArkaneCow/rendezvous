@@ -24,7 +24,7 @@ public class RendezvousAuthenticate implements ApiCommand {
 
     @Override
     public ApiReceiver execute(ApiCallback callback) {
-        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "?apiKey=" + RendezvousInvoker.RENDEZVOUS_API_KEY;
+        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "/" + username + "/" + password;
         return new RendezvousApiKeyReceiver(ApiNetwork.getInstance().apiJSON(url), callback);
     }
 }

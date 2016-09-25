@@ -33,7 +33,7 @@ enum ApiResult {
 }
 
 public abstract class ApiReceiver<T, V> {
-    private static final int API_MAX_WAIT = 5;
+    private static final int API_MAX_WAIT = 10;
     private RequestFuture responseFuture;
     private T responseData;
     private ApiCallback responseCallback = null;

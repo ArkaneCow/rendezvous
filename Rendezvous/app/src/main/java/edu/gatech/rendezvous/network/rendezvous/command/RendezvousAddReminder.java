@@ -25,7 +25,7 @@ public class RendezvousAddReminder implements ApiCommand {
 
     @Override
     public ApiReceiver execute(ApiCallback callback) {
-        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "?apiKey=" + RendezvousInvoker.RENDEZVOUS_API_KEY;
+        final String url = RendezvousInvoker.RENDEZVOUS_SERVER + apiEndPoint + "/" + RendezvousInvoker.RENDEZVOUS_API_KEY + "/" + userReceiver + "/" + userTrigger + "/" + message;
         return new RendezvousSuccessReceiver(ApiNetwork.getInstance().apiJSON(url), callback);
     }
 }

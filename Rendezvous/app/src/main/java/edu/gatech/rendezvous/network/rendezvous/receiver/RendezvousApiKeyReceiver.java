@@ -19,6 +19,10 @@ public class RendezvousApiKeyReceiver extends ApiReceiver<JSONObject, String> {
     public String getEntity() {
         final JSONObject jsonResponse = getResponse();
         try {
+            final boolean jsonSuccess = jsonResponse.getBoolean("success");
+            if (!jsonSuccess) {
+                return null;
+            }
             final String jsonApiKey = jsonResponse.getString("apiKey");
             return jsonApiKey;
         } catch (JSONException e) {

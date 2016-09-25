@@ -1,13 +1,8 @@
 package edu.gatech.rendezvous.controller;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.*;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -20,6 +15,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import edu.gatech.rendezvous.R;
+import edu.gatech.rendezvous.network.ApiCall;
+import edu.gatech.rendezvous.network.ApiCallback;
+import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
+import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
+import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousApiKeyReceiver;
+import edu.gatech.rendezvous.service.ApiNetwork;
+import edu.gatech.rendezvous.service.WifiDirectService;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -69,16 +71,40 @@ public class MainMenuActivity extends AppCompatActivity
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //this needs to be changed to check if the user and password are good
-                if (user.getText().toString().equals("User") && password.getText().toString().equals("password")) {
-                    Toast.makeText(getApplicationContext(), "Valid credentials", Toast.LENGTH_SHORT).show();
-
-                    dialogCustom.dismiss();
-                } else {
-                    Toast.makeText(getApplicationContext(), "Invalid credentials", Toast.LENGTH_SHORT).show();
-                    System.out.println(user.getText().toString().equals("User"));
-                    System.out.println(password.getText().toString().equals("password"));
+                if (user.getText().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "user cannot be blank", Toast.LENGTH_SHORT).show();
+                    return;
                 }
+                if (password.getText().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "password cannot be blank", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                RendezvousCommandFactory rcf = RendezvousCommandFactory.getInstance();
+                RendezvousInvoker rci = new RendezvousInvoker();
+                ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(user.getText().toString(), password.getText().toString()), new ApiCallback<RendezvousApiKeyReceiver>() {
+                    @Override
+                    public void onReceive(RendezvousApiKeyReceiver receiver) {
+                        String apiKey = receiver.getEntity();
+                        //this needs to be changed to check if the user and password are good
+                        if (apiKey != null) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            dialogCustom.dismiss();
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "login failure", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                });
+                rci.executeCall(rapiCall);
             }
         });
 
@@ -91,6 +117,11 @@ public class MainMenuActivity extends AppCompatActivity
         });
 
         dialogCustom.show();
+    }
+
+    private void initializeServices() {
+        ApiNetwork.getInstance(getApplicationContext());
+        WifiDirectService.getInstance(getApplicationContext());
     }
 
     @Override
@@ -109,6 +140,7 @@ public class MainMenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        initializeServices();
     }
 
     @Override
