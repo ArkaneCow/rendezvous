@@ -2,6 +2,7 @@ package edu.gatech.rendezvous.service;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.*;
@@ -39,6 +40,7 @@ public class ApiNetwork {
     }
 
     public RequestFuture<JSONObject> apiJSON(String url) {
+        Log.v("apiJSON", url);
         final RequestFuture<JSONObject> jsonFuture = RequestFuture.newFuture();
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, jsonFuture, jsonFuture);
         apiRequestQueue.add(jsonRequest);
