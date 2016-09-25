@@ -245,9 +245,9 @@ public class MainMenuActivity extends AppCompatActivity
     private void initializeServices() {
         ApiNetwork.getInstance(getApplicationContext());
         WifiDirectService.getInstance(getApplicationContext());
-        NotificationService.getInstance(getApplicationContext());
         rci = RendezvousInvoker.getInstance();
         rcf = RendezvousCommandFactory.getInstance();
+
     }
 
     private Button registerButton;
@@ -314,6 +314,7 @@ public class MainMenuActivity extends AppCompatActivity
             }
         });
         rci.executeCall(rapiCall);
+        NotificationService.getInstance(getApplicationContext());
     }
 
     @Override

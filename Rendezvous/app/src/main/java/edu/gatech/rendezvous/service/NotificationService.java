@@ -54,15 +54,7 @@ public class NotificationService {
         notificationManager.notify(001, notificationBuilder.build());
     }
 
-    private ApiCall rapiCall = new ApiCall(rcf.getReminderListCommand(SessionState.getInstance().getSessionUserName()), new ApiCallback<RendezvousReminderListReceiver>() {
-        @Override
-        public void onReceive(RendezvousReminderListReceiver receiver) {
-            if (receiver.getEntity() != null && receiver.getEntity().size() != 0) {
-                final List<Reminder> result = receiver.getEntity();
-                reminderList = result;
-            }
-        }
-    });
+    private ApiCall rapiCall;
 
     private NotificationService(Context notificationContext) {
         this.notificationContext = notificationContext;
@@ -72,6 +64,15 @@ public class NotificationService {
         rci = RendezvousInvoker.getInstance();
         rcf = RendezvousCommandFactory.getInstance();
 
+        rapiCall = new ApiCall(rcf.getReminderListCommand(SessionState.getInstance().getSessionUserName()), new ApiCallback<RendezvousReminderListReceiver>() {
+            @Override
+            public void onReceive(RendezvousReminderListReceiver receiver) {
+                if (receiver.getEntity() != null && receiver.getEntity().size() != 0) {
+                    final List<Reminder> result = receiver.getEntity();
+                    reminderList = result;
+                }
+            }
+        });
         notificationHandler.post(notificationUpdate);
     }
 
