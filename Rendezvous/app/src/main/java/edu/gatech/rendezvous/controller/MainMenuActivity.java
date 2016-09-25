@@ -38,7 +38,6 @@ public class MainMenuActivity extends AppCompatActivity
         reminderDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         //Process
         reminderDialog.setContentView(R.layout.activity_set_reminder);
-        //reminderDialog.setTitle("Plan a Rendezvous");
         who = (EditText) reminderDialog.findViewById(R.id.who);
         what = (EditText) reminderDialog.findViewById(R.id.what);
         btSave = (Button) reminderDialog.findViewById(R.id.btSave);
