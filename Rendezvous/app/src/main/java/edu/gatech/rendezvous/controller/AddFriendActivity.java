@@ -139,8 +139,8 @@ public class AddFriendActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        friendListAdapter.updateFriends(nameList);
-                        friendListAdapter.notifyDataSetChanged();
+                        //friendListAdapter.updateFriends(nameList);
+                        //friendListAdapter.notifyDataSetChanged();
                     }
                 });
             }

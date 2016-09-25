@@ -1,9 +1,15 @@
 package edu.gatech.rendezvous.service;
 
+import android.app.Notification;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import edu.gatech.rendezvous.R;
+import edu.gatech.rendezvous.controller.MainMenuActivity;
 import edu.gatech.rendezvous.model.Reminder;
 import edu.gatech.rendezvous.network.ApiCall;
 import edu.gatech.rendezvous.network.ApiCallback;
@@ -32,29 +38,43 @@ public class NotificationService {
     private Runnable notificationUpdate = new Runnable() {
         @Override
         public void run() {
+            ApiCall rapiCall = new ApiCall(rcf.getReminderListCommand(SessionState.getInstance().getSessionUserName()), new ApiCallback<RendezvousReminderListReceiver>() {
+                @Override
+                public void onReceive(RendezvousReminderListReceiver receiver) {
+                    if (receiver.getEntity() != null && receiver.getEntity().size() != 0) {
+                        final List<Reminder> result = receiver.getEntity();
+                        reminderList = result;
+                    }
+                }
+            });
             rci.executeCall(rapiCall);
             notificationHandler.postDelayed(notificationUpdate, WifiDirectService.UPDATE_PERIOD);
         }
     };
 
     public void executeUserReminder(String username) {
+        Log.v("executeUserReminder", username);
         for (Reminder reminder : reminderList) {
-            if (reminder.getUserReceiver().getUsername().equals(username)) {
+            if (reminder.getUserTrigger().getUsername().equals(username)) {
+                Log.v("userTrigger", reminder.getUserTrigger().getUsername());
+                Log.v("userReceiver", reminder.getUserReceiver().getUsername());
                 executeReminder(reminder);
             }
         }
     }
 
     private void executeReminder(Reminder reminder) {
-        NotificationCompat.Builder notificationBuilder =
+        Log.v("executingReminder", reminder.getUserTrigger().getUsername());
+        NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(notificationContext)
-                        .setContentTitle(reminder.getUserTrigger().getUsername())
-                        .setContentText(reminder.getReminderText());
+                        .setSmallIcon(R.drawable.meeting)
+                        .setContentTitle(reminder.getReminderText())
+                        .setContentText(reminder.getUserTrigger().getUsername());
+
         NotificationManager notificationManager = (NotificationManager) notificationContext.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(001, notificationBuilder.build());
+        notificationManager.notify(1, mBuilder.build());
     }
 
-    private ApiCall rapiCall;
 
     private NotificationService(Context notificationContext) {
         this.notificationContext = notificationContext;
@@ -64,15 +84,6 @@ public class NotificationService {
         rci = RendezvousInvoker.getInstance();
         rcf = RendezvousCommandFactory.getInstance();
 
-        rapiCall = new ApiCall(rcf.getReminderListCommand(SessionState.getInstance().getSessionUserName()), new ApiCallback<RendezvousReminderListReceiver>() {
-            @Override
-            public void onReceive(RendezvousReminderListReceiver receiver) {
-                if (receiver.getEntity() != null && receiver.getEntity().size() != 0) {
-                    final List<Reminder> result = receiver.getEntity();
-                    reminderList = result;
-                }
-            }
-        });
         notificationHandler.post(notificationUpdate);
     }
 
