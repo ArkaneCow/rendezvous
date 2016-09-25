@@ -55,7 +55,7 @@ public class UserListAdapter extends BaseAdapter implements ListAdapter {
     public View getView(int i, View view, ViewGroup viewGroup) {
         View newView;
         if (view == null) {
-            newView = inflater.inflate(R.layout.friend_list_item, null);
+            newView = inflater.inflate(R.layout.user_list_item, null);
         } else {
             newView = view;
         }

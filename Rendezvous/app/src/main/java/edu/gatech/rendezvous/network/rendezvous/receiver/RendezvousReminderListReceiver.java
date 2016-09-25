@@ -31,14 +31,12 @@ public class RendezvousReminderListReceiver extends ApiReceiver<JSONObject, List
                 return reminderList;
             }
             for (int i = 0; i < jsonReminderList.length(); i++) {
-                final JSONObject jsonReminder = jsonReminderList.getJSONObject(i);
-                final JSONObject jsonUserTrigger = jsonReminder.getJSONObject("userTrigger");
-                final JSONObject jsonUserReceiver = jsonReminder.getJSONObject("userReceiver");
-                final User userTrigger = new User(jsonUserTrigger.getString("username"));
-                final User userReceiver = new User(jsonUserReceiver.getString("username"));
-                final String reminderText = jsonReminder.getString("reminderText");
-                final int reminderTime = jsonReminder.getInt("time");
-                final Reminder reminder = new Reminder(userTrigger, userReceiver, reminderText, reminderTime);
+                final JSONArray jsonReminder = jsonReminderList.getJSONArray(i);
+                final String userReceiver = jsonReminder.getString(0);
+                final String userTrigger = jsonReminder.getString(1);
+                final String reminderText = jsonReminder.getString(2);
+                final int reminderTime = jsonReminder.getInt(3);
+                final Reminder reminder = new Reminder(new User(userTrigger), new User(userReceiver), reminderText, reminderTime);
                 reminderList.add(reminder);
             }
         } catch (JSONException e) {

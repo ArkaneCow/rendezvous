@@ -69,48 +69,23 @@ public class AddFriendActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApiCall rapiCall = new ApiCall(rcf.getUserExistCommand(userToAdd.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
+                ApiCall rapiCall2 = new ApiCall(rcf.getAddFriendCommand(SessionState.getInstance().getSessionUserName(),
+                        userToAdd.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
                     @Override
                     public void onReceive(RendezvousSuccessReceiver receiver) {
-                        Log.v("add friend", userToAdd.getText().toString());
-                        Log.v("add friend", receiver.getEntity().toString());
                         if (receiver.getEntity()) {
-                            Log.v("addfriend", "flag");
-                            ApiCall rapiCall2 = new ApiCall(rcf.getAddFriendCommand(SessionState.getInstance().getSessionUserName(),
-                                    userToAdd.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
-                                @Override
-                                public void onReceive(RendezvousSuccessReceiver receiver) {
-                                    if (receiver.getEntity()) {
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(getApplicationContext(), "You have a new friend!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                        addUserDialog.dismiss();
-                                    } else {
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                Toast.makeText(getApplicationContext(), "You are already friends!", Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    }
-                                }
-                            });
-                            rci.executeCall(rapiCall2);
-                        } else {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "We couldn't find your friend!", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "You have a new friend!", Toast.LENGTH_SHORT).show();
                                 }
                             });
+                            addUserDialog.dismiss();
+                        } else {
                         }
                     }
                 });
-                rci.executeCall(rapiCall);
-
+                rci.executeCall(rapiCall2);
 
             }
         });

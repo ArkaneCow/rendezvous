@@ -9,16 +9,14 @@
             android:layout_height="wrap_content"
             android:maxWidth="240dp"
             android:text="User"
-            android:background="#6E7B8B"
             android:textSize="25sp"
-            android:textColor="#00008B" />
+            android:textColor="@color/colorPrimaryDark" />
     <TextView
             android:id="@+id/reminderTextLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:maxWidth="240dp"
             android:text="Reminder Text"
-            android:background="#6E7B8B"
             android:layout_alignParentRight="true"
-            android:textColor="#00008B" />
+            android:textColor="@color/colorPrimaryDark" />
 </RelativeLayout>
