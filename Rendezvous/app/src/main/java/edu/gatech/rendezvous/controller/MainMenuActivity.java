@@ -76,15 +76,13 @@ public class MainMenuActivity extends AppCompatActivity
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String userText = user.getText().toString();
-                String passwordText = password.getText().toString();
-                ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(userText, passwordText), new ApiCallback<RendezvousApiKeyReceiver>() {
+                ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(user.getText().toString(), password.getText().toString()), new ApiCallback<RendezvousApiKeyReceiver>() {
                     @Override
                     public void onReceive(RendezvousApiKeyReceiver receiver) {
                         String apiKey = receiver.getEntity();
                         //this needs to be changed to check if the user and password are good
                         if (apiKey != null) {
-                            SessionState.getInstance().setSessionUserName(userText);
+                            SessionState.getInstance().setSessionUserName(user.getText().toString());
                             SessionState.getInstance().setSessionApiKey(apiKey);
                             SessionState.getInstance().saveState(getApplicationContext());
                             runOnUiThread(new Runnable() {
@@ -127,15 +125,13 @@ public class MainMenuActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "password cannot be blank", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                final String userText = user.getText().toString();
-                final String passwordText = password.getText().toString();
-                ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(userText, passwordText), new ApiCallback<RendezvousApiKeyReceiver>() {
+                final ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(user.getText().toString(), password.getText().toString()), new ApiCallback<RendezvousApiKeyReceiver>() {
                     @Override
                     public void onReceive(RendezvousApiKeyReceiver receiver) {
                         String apiKey = receiver.getEntity();
                         //this needs to be changed to check if the user and password are good
                         if (apiKey != null) {
-                            SessionState.getInstance().setSessionUserName(userText);
+                            SessionState.getInstance().setSessionUserName(user.getText().toString());
                             SessionState.getInstance().setSessionApiKey(apiKey);
                             SessionState.getInstance().saveState(getApplicationContext());
                             runOnUiThread(new Runnable() {
@@ -155,7 +151,7 @@ public class MainMenuActivity extends AppCompatActivity
                         }
                     }
                 });
-                ApiCall apiCall1 = new ApiCall(rcf.getRegisterUserCommand(userText, passwordText), new ApiCallback<RendezvousSuccessReceiver>() {
+                ApiCall apiCall1 = new ApiCall(rcf.getRegisterUserCommand(user.getText().toString(), password.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
                     @Override
                     public void onReceive(RendezvousSuccessReceiver receiver) {
                         boolean registerSuccess = receiver.getEntity();
