@@ -72,7 +72,10 @@ public class AddFriendActivity extends AppCompatActivity {
                 ApiCall rapiCall = new ApiCall(rcf.getUserExistCommand(userToAdd.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
                     @Override
                     public void onReceive(RendezvousSuccessReceiver receiver) {
+                        Log.v("add friend", userToAdd.getText().toString());
+                        Log.v("add friend", receiver.getEntity().toString());
                         if (receiver.getEntity()) {
+                            Log.v("addfriend", "flag");
                             ApiCall rapiCall2 = new ApiCall(rcf.getAddFriendCommand(SessionState.getInstance().getSessionUserName(),
                                     userToAdd.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
                                 @Override
