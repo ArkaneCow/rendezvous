@@ -17,9 +17,11 @@ import android.widget.Toast;
 import edu.gatech.rendezvous.R;
 import edu.gatech.rendezvous.network.ApiCall;
 import edu.gatech.rendezvous.network.ApiCallback;
+import edu.gatech.rendezvous.network.ApiReceiver;
 import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
 import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousApiKeyReceiver;
+import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousSuccessReceiver;
 import edu.gatech.rendezvous.service.ApiNetwork;
 import edu.gatech.rendezvous.service.SessionState;
 import edu.gatech.rendezvous.service.WifiDirectService;
@@ -118,8 +120,23 @@ public class MainMenuActivity extends AppCompatActivity
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                // ApiCall rapiCall = new ApiCall(rcf.getUserExistCommand())
+                if (user.getText().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "user cannot be blank", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (password.getText().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "password cannot be blank", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                String userText = user.getText().toString();
+                String passwordText = password.getText().toString();
+                ApiCall rapiCall = new ApiCall(rcf.getUserExistCommand(userText), new ApiCallback<RendezvousSuccessReceiver>() {
+                    @Override
+                    public void onReceive(RendezvousSuccessReceiver receiver) {
+                        boolean userExists = receiver.getEntity();
+                    }
+                });
+                rci.executeCall(rapiCall);
                 Toast.makeText(getApplicationContext(), "register success", Toast.LENGTH_SHORT).show();
                 dialogCustom.dismiss();
             }
