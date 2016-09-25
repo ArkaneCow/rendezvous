@@ -5,6 +5,9 @@ import android.os.Bundle;
 import android.widget.TextView;
 
 import edu.gatech.rendezvous.R;
+import edu.gatech.rendezvous.network.ApiCall;
+import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
+import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
 import edu.gatech.rendezvous.service.SessionState;
 
 public class SettingsActivity extends AppCompatActivity {

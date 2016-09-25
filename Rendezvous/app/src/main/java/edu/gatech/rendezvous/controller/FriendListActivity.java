@@ -3,6 +3,8 @@ package edu.gatech.rendezvous.controller;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import edu.gatech.rendezvous.R;
+import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
+import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
 
 public class FriendListActivity extends AppCompatActivity {
 
@@ -12,6 +14,8 @@ public class FriendListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_friends_list);
         getSupportActionBar().hide();
     }
+
+
 
 
 }
