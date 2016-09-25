@@ -14,8 +14,13 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import edu.gatech.rendezvous.R;
+import edu.gatech.rendezvous.network.ApiCall;
+import edu.gatech.rendezvous.network.ApiCallback;
+import edu.gatech.rendezvous.network.ApiReceiver;
 import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
 import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
+import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousSuccessReceiver;
+import edu.gatech.rendezvous.service.SessionState;
 import edu.gatech.rendezvous.service.WifiDirectService;
 
 import java.util.ArrayList;
@@ -57,20 +62,49 @@ public class AddFriendActivity extends AppCompatActivity {
         userToAdd = (EditText) addUserDialog.findViewById(R.id.userToAdd);
         addButton = (Button) addUserDialog.findViewById(R.id.addButton);
 
+
+
+
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (userToAdd.getText().toString().equals("testuser")) {
-                    Toast.makeText(getApplicationContext(), "You have a new friend!", Toast.LENGTH_SHORT).show();
-                    addUserDialog.dismiss();
-                } else {
-                    Toast.makeText(getApplicationContext(), "We couldn't find your friend!", Toast.LENGTH_SHORT).show();
-                }
+                ApiCall rapiCall = new ApiCall(rcf.getUserExistCommand(userToAdd.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
+                    @Override
+                    public void onReceive(RendezvousSuccessReceiver receiver) {
+                        if (receiver.getEntity()) {
+                            ApiCall rapiCall2 = new ApiCall(rcf.getAddFriendCommand(SessionState.getInstance().getSessionUserName(),
+                                    userToAdd.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
+                                @Override
+                                public void onReceive(RendezvousSuccessReceiver receiver) {
+                                    if (receiver.getEntity()) {
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                Toast.makeText(getApplicationContext(), "You have a new friend!", Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                            rci.executeCall(rapiCall2);
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "We couldn't find your friend!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                });
+                rci.executeCall(rapiCall);
+
+
             }
         });
         addUserDialog.show();
     }
-
 
     public void launchAddUserDialog(View v) {
         setAddUserDialog();
