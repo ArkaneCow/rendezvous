@@ -87,6 +87,7 @@ public class AddFriendActivity extends AppCompatActivity {
                                                 Toast.makeText(getApplicationContext(), "You have a new friend!", Toast.LENGTH_SHORT).show();
                                             }
                                         });
+                                        addUserDialog.dismiss();
                                     }
                                 }
                             });

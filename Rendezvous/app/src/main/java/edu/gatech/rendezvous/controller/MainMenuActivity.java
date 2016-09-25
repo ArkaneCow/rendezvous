@@ -19,6 +19,7 @@ import edu.gatech.rendezvous.network.ApiCall;
 import edu.gatech.rendezvous.network.ApiCallback;
 import edu.gatech.rendezvous.network.ApiReceiver;
 import edu.gatech.rendezvous.network.rendezvous.RendezvousInvoker;
+import edu.gatech.rendezvous.network.rendezvous.command.RendezvousAddReminder;
 import edu.gatech.rendezvous.network.rendezvous.command.RendezvousCommandFactory;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousApiKeyReceiver;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousSuccessReceiver;
@@ -28,6 +29,9 @@ import edu.gatech.rendezvous.service.WifiDirectService;
 
 public class MainMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private RendezvousCommandFactory rcf;
+    private RendezvousInvoker rci;
 
     private void setReminderDialog() {
         //Variables
@@ -45,16 +49,36 @@ public class MainMenuActivity extends AppCompatActivity
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //this needs to be changed to check if the user and password are good
-               //take the information from who and what and save it into reminders
+                ApiCall rapiCall = new ApiCall(rcf.getAddReminderCommand(who.getText().toString(),
+                        SessionState.getInstance().getSessionUserName(), what.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
+                    @Override
+                    public void onReceive(RendezvousSuccessReceiver receiver) {
+                        if (receiver.getEntity()) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "You have set a new reminder!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            reminderDialog.dismiss();
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "You have not set a new reminder!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                });
+                rci.executeCall(rapiCall);
             }
         });
         reminderDialog.findViewById(R.id.reminderMainLayout).requestFocus();
         reminderDialog.show();
     }
 
-    private RendezvousCommandFactory rcf;
-    private RendezvousInvoker rci;
+
 
     private void startDialog() {
         //Variables
