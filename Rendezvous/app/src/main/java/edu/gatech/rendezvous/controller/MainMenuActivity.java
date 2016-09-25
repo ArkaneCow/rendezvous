@@ -52,6 +52,9 @@ public class MainMenuActivity extends AppCompatActivity
         reminderDialog.show();
     }
 
+    private RendezvousCommandFactory rcf;
+    private RendezvousInvoker rci;
+
     private void startDialog() {
         //Variables
         final EditText user;
@@ -80,8 +83,6 @@ public class MainMenuActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "password cannot be blank", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                RendezvousCommandFactory rcf = RendezvousCommandFactory.getInstance();
-                RendezvousInvoker rci = RendezvousInvoker.getInstance();
                 final String userText = user.getText().toString();
                 String passwordText = password.getText().toString();
                 ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(userText, passwordText), new ApiCallback<RendezvousApiKeyReceiver>() {
@@ -117,7 +118,9 @@ public class MainMenuActivity extends AppCompatActivity
         btCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(), "Adding you to the server", Toast.LENGTH_SHORT).show();
+
+                // ApiCall rapiCall = new ApiCall(rcf.getUserExistCommand())
+                Toast.makeText(getApplicationContext(), "register success", Toast.LENGTH_SHORT).show();
                 dialogCustom.dismiss();
             }
         });
@@ -128,12 +131,15 @@ public class MainMenuActivity extends AppCompatActivity
     private void initializeServices() {
         ApiNetwork.getInstance(getApplicationContext());
         WifiDirectService.getInstance(getApplicationContext());
+        rci = RendezvousInvoker.getInstance();
+        rcf = RendezvousCommandFactory.getInstance();
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+        initializeServices();
         SessionState.getInstance().restoreState(getApplicationContext());
         if (SessionState.getInstance().getSessionUserName() == null || SessionState.getInstance().getSessionApiKey() == null) {
             startDialog();
@@ -149,7 +155,7 @@ public class MainMenuActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        initializeServices();
+
     }
 
     @Override

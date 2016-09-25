@@ -33,7 +33,7 @@ public class RendezvousCommandFactory {
         return new RendezvousAddDevice(username, deviceId);
     }
 
-    public ApiCommand getUsersExistsCommand(String userQuery) {
+    public ApiCommand getUsersExistCommand(String userQuery) {
         return new RendezvousUserExists(userQuery);
     }
 
