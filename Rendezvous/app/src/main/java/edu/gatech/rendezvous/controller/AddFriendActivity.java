@@ -112,14 +112,37 @@ public class AddFriendActivity extends AppCompatActivity {
     }
 
     private List<String> refreshList() {
-        List<String> idList = wifiDirectService.getWifiDirectBroadcastReceiver().getNameList();
+        final List<String> idList = wifiDirectService.getWifiDirectBroadcastReceiver().getNameList();
         if (idList == null) {
             return null;
         }
-        ApiCall rapiCall = new ApiCall(rcf.getProcessIdListCommand(SessionState.getInstance().getSessionUserName(), idList), new ApiCallback<RendezvousUserListReceiver>() {
+        List<String> hashList = new ArrayList<>();
+        for (String id : idList) {
+            hashList.add(WifiDirectService.getInstance().idFunction(id));
+        }
+        ApiCall rapiCall = new ApiCall(rcf.getProcessIdListCommand(SessionState.getInstance().getSessionUserName(), hashList), new ApiCallback<RendezvousUserListReceiver>() {
             @Override
             public void onReceive(RendezvousUserListReceiver receiver) {
-
+                final List<String> result = receiver.getEntity();
+                final List<String> nameList = wifiDirectService.getWifiDirectBroadcastReceiver().getNameList();
+                if (result.size() == 0) {
+                    return;
+                }
+                if (nameList.size() == 0) {
+                    return;
+                }
+                for (int i = 0; i < nameList.size(); i++) {
+                    if (result.get(i) != null && result.get(i).length() > 0) {
+                        nameList.set(i, result.get(i));
+                    }
+                }
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        friendListAdapter.updateFriends(nameList);
+                        friendListAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
         rci.executeCall(rapiCall);

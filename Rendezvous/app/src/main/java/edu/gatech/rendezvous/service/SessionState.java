@@ -61,7 +61,6 @@ public class SessionState {
     public void saveState(Context context) {
         final SharedPreferences saveSession = context.getSharedPreferences(SESSION_PREFS, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = saveSession.edit();
-        editor.clear();
         if (sessionUserName != null) {
             editor.putString(USER_PREFIX + "username", sessionUserName);
             editor.putString(USER_PREFIX + "apikey", sessionApiKey);
@@ -78,7 +77,6 @@ public class SessionState {
     public void saveDeviceId(Context context) {
         final SharedPreferences saveSession = context.getSharedPreferences(SESSION_PREFS, Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = saveSession.edit();
-        editor.clear();
         if (sessionUserName != null) {
             editor.putString(USER_PREFIX + "deviceId", WifiDirectService.getInstance().getDeviceId());
         }

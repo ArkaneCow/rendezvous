@@ -71,6 +71,7 @@ public class WifiDirectBroadcastReceiver extends BroadcastReceiver {
                 for (WifiP2pDevice device : wifiP2pDeviceList.getDeviceList()) {
                     updateAddressList.add(device.deviceAddress);
                     updateNameList.add(device.deviceName);
+                    NotificationService.getInstance().executeUserReminder(device.deviceName);
                 }
                 addressList = updateAddressList;
                 nameList = updateNameList;

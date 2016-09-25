@@ -3,6 +3,7 @@ package edu.gatech.rendezvous.service;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.*;
@@ -43,6 +44,7 @@ public class ApiNetwork {
         Log.v("apiJSON", url);
         final RequestFuture<JSONObject> jsonFuture = RequestFuture.newFuture();
         final JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, jsonFuture, jsonFuture);
+        jsonRequest.setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         apiRequestQueue.add(jsonRequest);
         return jsonFuture;
     }

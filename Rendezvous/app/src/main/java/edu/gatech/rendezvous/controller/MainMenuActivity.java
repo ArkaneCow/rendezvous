@@ -28,6 +28,7 @@ import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousApiKeyReceive
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousReminderListReceiver;
 import edu.gatech.rendezvous.network.rendezvous.receiver.RendezvousSuccessReceiver;
 import edu.gatech.rendezvous.service.ApiNetwork;
+import edu.gatech.rendezvous.service.NotificationService;
 import edu.gatech.rendezvous.service.SessionState;
 import edu.gatech.rendezvous.service.WifiDirectService;
 
@@ -59,8 +60,8 @@ public class MainMenuActivity extends AppCompatActivity
         btSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ApiCall rapiCall = new ApiCall(rcf.getAddReminderCommand(who.getText().toString(),
-                        SessionState.getInstance().getSessionUserName(), what.getText().toString()), new ApiCallback<RendezvousSuccessReceiver>() {
+                ApiCall rapiCall = new ApiCall(rcf.getAddReminderCommand(who.getText().toString().replace(" ", "_"),
+                        SessionState.getInstance().getSessionUserName(), what.getText().toString().replace(" ", "_")), new ApiCallback<RendezvousSuccessReceiver>() {
                     @Override
                     public void onReceive(RendezvousSuccessReceiver receiver) {
                         if (receiver.getEntity()) {
@@ -71,6 +72,27 @@ public class MainMenuActivity extends AppCompatActivity
                                 }
                             });
                             reminderDialog.dismiss();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    ApiCall rapiCall = new ApiCall(rcf.getReminderListCommand(SessionState.getInstance().getSessionUserName()), new ApiCallback<RendezvousReminderListReceiver>() {
+                                        @Override
+                                        public void onReceive(RendezvousReminderListReceiver receiver) {
+                                            if (receiver.getEntity() != null && receiver.getEntity().size() != 0) {
+                                                final List<Reminder> result = receiver.getEntity();
+                                                runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        reminderListAdapter.updateReminders(result);
+                                                        reminderListAdapter.notifyDataSetChanged();
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                    rci.executeCall(rapiCall);
+                                }
+                            });
                         } else {
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -124,6 +146,12 @@ public class MainMenuActivity extends AppCompatActivity
                             });
                             Log.v("deviceid", WifiDirectService.getInstance().getDeviceId() == null ? "null" : WifiDirectService.getInstance().getDeviceId());
                             dialogCustom.dismiss();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    recreate();
+                                }
+                            });
                         } else {
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -173,6 +201,12 @@ public class MainMenuActivity extends AppCompatActivity
                                 }
                             });
                             dialogCustom.dismiss();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    recreate();
+                                }
+                            });
                         } else {
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -211,6 +245,7 @@ public class MainMenuActivity extends AppCompatActivity
     private void initializeServices() {
         ApiNetwork.getInstance(getApplicationContext());
         WifiDirectService.getInstance(getApplicationContext());
+        NotificationService.getInstance(getApplicationContext());
         rci = RendezvousInvoker.getInstance();
         rcf = RendezvousCommandFactory.getInstance();
     }

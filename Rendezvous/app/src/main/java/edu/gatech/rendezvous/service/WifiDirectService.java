@@ -37,7 +37,7 @@ public class WifiDirectService {
     }
 
     public String idFunction(String input) {
-        return CryptographyService.getInstance().hashString(input);
+        return CryptographyService.getInstance().hashString(input).substring(0, 9);
     }
 
     public String getDeviceId() {
