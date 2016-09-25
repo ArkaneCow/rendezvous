@@ -73,18 +73,9 @@ public class MainMenuActivity extends AppCompatActivity
         password = (EditText) dialogCustom.findViewById(R.id.enterPass);
         btLogin = (Button) dialogCustom.findViewById(R.id.btLogin);
         btCreate = (Button) dialogCustom.findViewById(R.id.btCreate);
-
         btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (user.getText().length() == 0) {
-                    Toast.makeText(getApplicationContext(), "user cannot be blank", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (password.getText().length() == 0) {
-                    Toast.makeText(getApplicationContext(), "password cannot be blank", Toast.LENGTH_SHORT).show();
-                    return;
-                }
                 final String userText = user.getText().toString();
                 String passwordText = password.getText().toString();
                 ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(userText, passwordText), new ApiCallback<RendezvousApiKeyReceiver>() {
@@ -99,7 +90,7 @@ public class MainMenuActivity extends AppCompatActivity
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "authentication success", Toast.LENGTH_SHORT).show();
                                 }
                             });
                             dialogCustom.dismiss();
@@ -107,12 +98,20 @@ public class MainMenuActivity extends AppCompatActivity
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast.makeText(getApplicationContext(), "login failure", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getApplicationContext(), "authentication failure", Toast.LENGTH_SHORT).show();
                                 }
                             });
                         }
                     }
                 });
+                if (user.getText().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "user cannot be blank", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (password.getText().length() == 0) {
+                    Toast.makeText(getApplicationContext(), "password cannot be blank", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 rci.executeCall(rapiCall);
             }
         });
@@ -128,15 +127,51 @@ public class MainMenuActivity extends AppCompatActivity
                     Toast.makeText(getApplicationContext(), "password cannot be blank", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                String userText = user.getText().toString();
-                String passwordText = password.getText().toString();
-                ApiCall rapiCall = new ApiCall(rcf.getUserExistCommand(userText), new ApiCallback<RendezvousSuccessReceiver>() {
+                final String userText = user.getText().toString();
+                final String passwordText = password.getText().toString();
+                ApiCall rapiCall = new ApiCall(rcf.getAuthenticateCommand(userText, passwordText), new ApiCallback<RendezvousApiKeyReceiver>() {
                     @Override
-                    public void onReceive(RendezvousSuccessReceiver receiver) {
-                        boolean userExists = receiver.getEntity();
+                    public void onReceive(RendezvousApiKeyReceiver receiver) {
+                        String apiKey = receiver.getEntity();
+                        //this needs to be changed to check if the user and password are good
+                        if (apiKey != null) {
+                            SessionState.getInstance().setSessionUserName(userText);
+                            SessionState.getInstance().setSessionApiKey(apiKey);
+                            SessionState.getInstance().saveState(getApplicationContext());
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "authentication success", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            dialogCustom.dismiss();
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "authentication failure", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                     }
                 });
-                rci.executeCall(rapiCall);
+                ApiCall apiCall1 = new ApiCall(rcf.getRegisterUserCommand(userText, passwordText), new ApiCallback<RendezvousSuccessReceiver>() {
+                    @Override
+                    public void onReceive(RendezvousSuccessReceiver receiver) {
+                        boolean registerSuccess = receiver.getEntity();
+                        if (registerSuccess) {
+                            rci.executeCall(rapiCall);
+                        } else {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(getApplicationContext(), "registration unsuccessful", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+                    }
+                });
+                rci.executeCall(apiCall1);
                 Toast.makeText(getApplicationContext(), "register success", Toast.LENGTH_SHORT).show();
                 dialogCustom.dismiss();
             }
